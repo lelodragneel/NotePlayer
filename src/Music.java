@@ -141,16 +141,12 @@ public class Music extends JFrame implements ActionListener, DocumentListener {
 					// check flats and sharps
 					if (i + 1 < note.length()) {
 						// check for flat
-						if (note.charAt(i + 1) == '#') {
-							System.out.println("activate flat");
+						if (note.charAt(i + 1) == '#')
 							flat--;
-						}
 
 						// check for sharp
-						if (note.charAt(i + 1) == '!') {
-							System.out.println("activate sharp");
+						if (note.charAt(i + 1) == '!')
 							sharp++;
-						}
 					}
 
 					if (ch == 'C')
