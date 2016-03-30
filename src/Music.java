@@ -104,28 +104,28 @@ public class Music extends JFrame implements ActionListener, DocumentListener {
 			MidiChannel[] channels = synth.getChannels();
 			int pitch = 60;
 			String num = "";
-			boolean r = false;
+			boolean resetNum = false;
 			int octaveNum = 0;
+			int flat = 0;
+			int sharp = 0;
 
 			// loop through all chars of the inputed notestring
 			for (int i = 0; i < note.length(); i++) {
 				char ch = note.charAt(i);
 
+				// skip loop turn if the current char is a flat/sharp
+				if (ch == '!' || ch == '#')
+					continue;
+
 				// increase octave pitch then skip this loop turn
 				if (ch == '>') {
-					if (pitch + 12 > 108)
-						pitch = 108;
-					else
-						pitch += 12;
+					octaveNum += 12;
 					continue;
 				}
 
 				// decrease octave pitch then skip this loop turn
 				if (ch == '<') {
-					if (pitch - 12 < 21)
-						pitch = 21;
-					else
-						pitch -= 12;
+					octaveNum -= 12;
 					continue;
 				}
 
@@ -133,24 +133,48 @@ public class Music extends JFrame implements ActionListener, DocumentListener {
 				if (Character.isDigit(ch)) {
 					num += "" + ch;
 					continue;
+
 				} else {
 					// tag the variable 'num' to be reset at the end of the loop
-					r = true;
+					resetNum = true;
 
-					if (ch == 'C' || ch == 'c')
-						pitch = 60 + octaveNum;
-					if (ch == 'D' || ch == 'd')
-						pitch = 62 + octaveNum;
-					if (ch == 'E' || ch == 'e')
-						pitch = 64 + octaveNum;
-					if (ch == 'F' || ch == 'f')
-						pitch = 65 + octaveNum;
-					if (ch == 'G' || ch == 'g')
-						pitch = 67 + octaveNum;
-					if (ch == 'A' || ch == 'a')
-						pitch = 69 + octaveNum;
-					if (ch == 'B' || ch == 'b')
-						pitch = 71 + octaveNum;
+					// check flats and sharps
+					if (i + 1 < note.length()) {
+						// check for flat
+						if (note.charAt(i + 1) == '#') {
+							System.out.println("activate flat");
+							flat--;
+						}
+
+						// check for sharp
+						if (note.charAt(i + 1) == '!') {
+							System.out.println("activate sharp");
+							sharp++;
+						}
+					}
+
+					if (ch == 'C')
+						pitch = 60 + octaveNum + flat + sharp;
+					if (ch == 'D')
+						pitch = 62 + octaveNum + flat + sharp;
+					if (ch == 'E')
+						pitch = 64 + octaveNum + flat + sharp;
+					if (ch == 'F')
+						pitch = 65 + octaveNum + flat + sharp;
+					if (ch == 'G')
+						pitch = 67 + octaveNum + flat + sharp;
+					if (ch == 'A')
+						pitch = 69 + octaveNum + flat + sharp;
+					if (ch == 'B')
+						pitch = 71 + octaveNum + flat + sharp;
+
+					// check if pitch is out of range
+					if (pitch > 108)
+						pitch = 108;
+					if (pitch < 21)
+						pitch = 21;
+
+					System.out.println(pitch);
 
 				}
 				channels[channel].noteOn(pitch, volume);
@@ -159,12 +183,16 @@ public class Music extends JFrame implements ActionListener, DocumentListener {
 					Thread.sleep(duration * Integer.parseInt(num));
 				else
 					Thread.sleep(duration);
-				if (r) {
+				if (resetNum) {
 					num = "";
-					r = false;
+					resetNum = false;
 				}
-
 				channels[channel].noteOff(pitch);
+
+				// reset the sharp/flat pitch
+				pitch = 0;
+				pitch = 0;
+
 			}
 			// end the last note smoothly
 			Thread.sleep(1000);
