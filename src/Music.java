@@ -186,8 +186,8 @@ public class Music extends JFrame implements ActionListener, DocumentListener {
 				channels[channel].noteOff(pitch);
 
 				// reset the sharp/flat pitch
-				pitch = 0;
-				pitch = 0;
+				flat = 0;
+				sharp = 0;
 
 			}
 			// end the last note smoothly
