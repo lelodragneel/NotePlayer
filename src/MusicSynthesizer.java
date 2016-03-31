@@ -4,10 +4,11 @@ public class MusicSynthesizer {
 
 	public static void main(String[] args) {
 
-		// safely instantiate the music frame
+		// safely instantiate both music frames
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new Music();
+				new Music_TextReader();
+				new Music_UserInput();
 			}
 		});
 
