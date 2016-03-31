@@ -1,19 +1,14 @@
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.sound.midi.MidiChannel;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Synthesizer;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class Music_TextReader extends JFrame implements ActionListener {
